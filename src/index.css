@@ -48,9 +48,10 @@ code, pre {
 
 /* Layout */
 .container {
-  max-width: 900px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 96px 32px 48px;
+  zoom: 1.17;
 }
 
 @media (max-width: 768px) {
@@ -74,13 +75,16 @@ code, pre {
 .last-updated {
   font-size: 14px;
   color: var(--muted);
+  margin-top: 48px;
+  text-align: center;
+  padding-bottom: 16px;
 }
 
 /* Navigation */
 nav {
   display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 nav .nav-links {
@@ -93,21 +97,27 @@ nav .nav-links {
 /* Nav divider */
 .nav-divider {
   border: none;
-  border-top: 1.5px solid var(--text);
-  margin: 0 auto 48px;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  margin-bottom: 0;
+  max-width: 600px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Content area — matches divider width */
+/* Content area */
 .content-area {
+  max-width: 600px;
   width: 100%;
-  margin: 0 auto;
+  margin: 48px auto 0;
 }
 
 nav a {
   color: var(--muted);
   text-decoration: none;
   font-size: 16px;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
@@ -133,6 +143,130 @@ nav a.active {
 
 .theme-toggle:hover {
   color: var(--text);
+}
+
+/* Shooting stars */
+.shooting-stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.shooting-star {
+  position: absolute;
+  top: -10px;
+  height: 2px;
+  border-radius: 1px;
+  will-change: transform, opacity;
+  animation: shootingStar var(--duration) linear forwards;
+}
+
+.shooting-star--left {
+  background: linear-gradient(to right, transparent, var(--text));
+}
+
+.shooting-star--left::before {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: -1px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text);
+  opacity: 0.6;
+  box-shadow: 0 0 6px 2px var(--text);
+}
+
+.shooting-star--right {
+  background: linear-gradient(to left, transparent, var(--text));
+}
+
+.shooting-star--right::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -1px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text);
+  opacity: 0.6;
+  box-shadow: 0 0 6px 2px var(--text);
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translate(0, 0) rotate(var(--angle));
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--angle));
+    opacity: 0;
+  }
+}
+
+/* Twinkling stars */
+.twinkle-stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.twinkle-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  will-change: opacity, transform;
+  animation: twinkle 2s ease-in-out forwards;
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.8), 0 0 16px 6px rgba(180, 210, 255, 0.4);
+}
+
+/* Vertical spike */
+.twinkle-star::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 28px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(180, 210, 255, 0.7) 0%, transparent 70%);
+  filter: blur(1px);
+}
+
+/* Horizontal spike */
+.twinkle-star::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(180, 210, 255, 0.7) 0%, transparent 70%);
+  filter: blur(1px);
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  25%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1) rotate(11deg); }
+  50%  { opacity: 0.3; transform: translate(-50%, -50%) scale(0.6) rotate(22deg); }
+  75%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1) rotate(34deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(45deg); }
 }
 
 /* Page transitions */
@@ -427,6 +561,12 @@ nav a.active {
   display: flex;
   gap: 16px;
   margin-top: 32px;
+}
+
+.site-header .social-links {
+  justify-content: center;
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 .social-links a {
