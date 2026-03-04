@@ -1,12 +1,27 @@
+import { useState, useEffect } from "react";
 import { personalInfo } from "@/data/portfolioData";
 
 export default function ContactPage() {
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/track")
+      .then((r) => r.json())
+      .then((data) => setVisitorCount(data.count))
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="page">
       <h2 className="section-title">Contact</h2>
-      <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: 32 }}>
+      <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: visitorCount !== null ? 8 : 32 }}>
         Feel free to reach out.
       </p>
+      {visitorCount !== null && (
+        <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: 32 }}>
+          {visitorCount} Portfolio Visits
+        </p>
+      )}
 
       <a href={`mailto:${personalInfo.emails[0]}`} className="contact-link">
         <span className="label">School</span>

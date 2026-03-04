@@ -28,6 +28,10 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    fetch("/api/track", { method: "POST" }).catch(() => {});
+  }, []);
+
   const themeOrder: typeof theme[] = ["dark", "rain", "snow", "light"];
   const themeIcons: Record<typeof theme, React.ReactNode> = {
     dark: (

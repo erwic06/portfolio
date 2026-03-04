@@ -4,3 +4,6 @@ venv/
 .DS_Store
 *.local
 *.tsbuildinfo
+.env
+.vercel
+.env*.local
