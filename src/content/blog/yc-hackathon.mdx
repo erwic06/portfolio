@@ -1,0 +1,100 @@
+---
+title: "How I Just Won an M4 Mac Mini and $28k at One of YC's Most Competitive Hackathons"
+date: "2026-03-02"
+excerpt: "We built Slipstream — a shared routing brain for web agents — and placed 3rd overall at the YC x BrowserUse Web Agents Hackathon."
+readTime: "10 min read"
+---
+
+Ever since I got on the flight to SF I was terrified.
+
+I started looking through Discord for teammates for me and Nathan, and all I saw was previous hackathon winners, current founders at YC companies, interns at Notion, Vercel, insane companies — and all I could think was: "there's no way we're winning anything." I was feeling seriously out of my league, and this feeling only got worse the more I investigated. 200 of the most talented young founders, students, and builders were gathering here, and I felt out of place. I didn't sleep till 4am that night because I was so stressed. I couldn't think about anything else. I was really, really scared. I wanted to go home already. I wanted to be surrounded by safety — family, friends, familiar environments.
+
+## Showing up
+
+The next morning I felt a little better. Hyped myself up while getting ready and reminded myself that even if I didn't win anything, I was gonna squeeze as much out of this experience as I could. Talk to people, get to know the brilliant minds participating, soak in the atmosphere of SF.
+
+Met up with Nathan close to my hotel and we Waymo'd. He was feeling equally scared once I filled him in on the talent density at the hack. We got there and it only got worse. My confidence from that morning dwindled more and more as we stood in line to get into the venue. In front of us, repeat founders talked about how they "ghost repo'd" their idea and already had stuff ready to go. They knew people in the city, had friends in YC, and had done this a thousand times before. Both had plaques from frontier labs awarding them for billions in token usage — they said they were ninth on the leaderboards. Didn't even know there was a leaderboard. We talked to a group of 5 high school kids right behind us: they said they go to these things every single weekend.
+
+SF was a different beast.
+
+## Setting up camp
+
+We got into the venue and grabbed lunch at YC headquarters. Never thought I'd be able to experience something so cool. We hit all of the sponsor booths, and specifically talked to Laminar — Kolbe and Robert. The goats. Their technology was fire and we knew that no matter what we had to use it.
+
+We presented a couple of our ideas to sponsors and organizers. Our main one was a DOM mapping tool any frontend engineer could inject into their DOM every time they deployed their website — a simple script that would map out every element so web agents could better navigate the site. We knew every team around us was gonna make something related to deploying X agents to do X tasks and make something more efficient. We knew we needed to do better than that.
+
+We talked to Sean, one of the co-organizers along with Reagan. He was only a second year like me but was the head of growth at BrowserUse. He said the idea was super interesting and useful, and that they hadn't been thinking of something like this. Reagan had the same thoughts except he'd been doing it himself — "one amongst many," he said.
+
+While walking back to our table, we got passed in the hallway by a guy looking for a team. "My name is Ekagra, current 4th year at Stanford, currently doing AI inference at Snowflake." We'd been ghosted by 5 people previously and thought we were such scrubs that nobody would want to team with us, so we immediately invited him to lunch. He thought the idea was solid, so we got started.
+
+## The problem
+
+The night before the hackathon, I had tried to use one of BrowserUse's agents to claim all the sponsor credits offered to participants. I ran the agent and did some other research. 40 minutes later I checked back in: still on the first task. 71 tool calls, screenshots, web searches. $30 in credits for a single trivial action. There HAD to be a better way to do this. The agents couldn't even recognize the discount codes on the website, and thousands of these agents were being deployed daily — an insane amount of compute burn and needless repetition.
+
+Every single web agent starts from ground zero. No memory layer, no map. Tons of LLM calls, queries to vision models, hitting a ton of dead ends. This is like telling someone how to get to your house by describing the roads based on the darkness of their asphalt.
+
+Tools like Laminar existed to observe, evaluate, and analyze agent behavior ("traces") so engineers could understand where things went wrong and use the data for reinforcement learning. Things like Supermemory kept agent memory across sessions so agents could utilize personal context — like knowing you prefer Sensodyne over Colgate. But that wasn't enough. These only stored personal context, not procedural context: how to do things in the most efficient way known.
+
+## Slipstream
+
+So what can be done? We built Slipstream — a shared routing brain for agents. You know Waze? The app that crowdsources data from drivers to give you real-time traffic and police data for better navigation? We wanted to build that for the web.
+
+Whenever a successful agent run finishes, it produces traces of the steps it took to reach its goal. Our client wraps this path with Laminar's `observe()` and `evaluate()` features to produce a concise, high-confidence optimal path — only steps with greater than 90% success rate and 70% confidence are added. We send this path to an OpenAI embeddings model which turns it into a 1536-dimensional vector, and store it in MongoDB. This information is now shared for every agent in the world to use on subsequent runs. The more people use our product, the better it gets. We store only the past 2–3 days of data to account for paths going stale.
+
+On subsequent runs, any agent with a rule written to query our database (~300ms, much lower latency and cost than any LLM call) can access the plethora of information stored by thousands of web agents.
+
+If you didn't follow any of that — here's the TLDR: web agents can access a "library" of instructions for how to do certain stuff. Like using a cookbook instead of throwing random stuff in a pot and hoping it works.
+
+We also built a visualization frontend of this "brain" for ops engineers who wanted to see how well their website was optimized for web agents. You could run queries on it, see real-time data points stored live in the network, and visualize relational embeddings in the data.
+
+## The build (or lack thereof)
+
+2 hours after forming the team, we were still on different design docs with cluttered Notion pages and way too much slop. We needed to refine our idea, FAST.
+
+Unfortunately, this never happened. Insane amounts of Gemini prompts and reading BrowserUse docs later, we were still at square one.
+
+5 more hours of research, debates, talking to sponsors, more Gemini and Claude prompts — STILL AT THE SAME PLACE.
+
+People were already done with their frontends and all we had was a messy Notion document and no real direction.
+
+We went outside for dinner (mobile pizza catering, so fire) and realized the wait was gonna be an hour, so we brought our laptops out to hack. Still nothing coordinated. Gray was on one page, Nathan was on another, and I didn't even know what we were doing anymore.
+
+I lowkey had a breakdown and had to call my girlfriend from the first floor elevator shaft. Was so scared and panicked that I started crying. She, being the goat, took me out of the slump and convinced me of the reason I was here: to win. She told me to stay strong, try as hard as possible, and persist.
+
+I went back outside, got a pizza, talked to Nathan and Gray. Once we got back inside, we HAD to start shipping something. It was 9pm and we still had NO CODE. Only 13 hours to go. We found a spot on the first floor with cozier chairs, settled in, refined the idea, divided the work, and got coding. Claude Code, Codex, Ghostty — the memory utilization on my laptop spiked to 95% as we launched multiple agents and iterated fast.
+
+At 10pm we ran into a roadblock: the sponsored MongoDB cluster was failing to connect. Gray and I debugged for 45 minutes — nothing. The secondaries worked fine but the primary kept timing out despite being active and healthy. Finally, running it on Nathan's cluster got it to work. Then Gray had to leave — parking only lasted till 10pm — and suddenly it was just Nathan and me again.
+
+At midnight the doors to the venue locked. If we left, we couldn't get back in till 6am. We continued working for the next 5 hours, getting delirious from caffeine and endless fruit gummies and muffin bites.
+
+## The morning scramble
+
+At 4:30am I got the frontend to a place I was comfortable with. Nathan and I slept for about 2 hours. Woke up at 6:30 and got back to work.
+
+Roughly two and a half hours before submissions were due, and our database was still unpopulated. The processing engine for optimal paths — the core of our product — wasn't working. Gray still hadn't gotten back to the venue.
+
+We figured out that the fake data I'd seeded into the database for testing was incorrectly being identified as real data by the algorithm, entirely breaking the learning engine. 5 broken features and endless batch tests later, we turned in our submission — the worst video demo of all time — and had to run upstairs to ask the organizer to let us submit because the form closed at 9:59am and it turned 10:00 two seconds before we clicked submit.
+
+## Demos
+
+10 minutes later we got our live demo room assignments. 2-minute presentation to a panel of about 12 judges — founding engineers, founders, VCs, one of the founders of BrowserUse himself sitting right in front.
+
+It went pretty well. Some "hmm, kinda cool" faces from the judges, some meaningful questions we answered to the best of our ability. We came out feeling fairly confident (incredibly delusional in hindsight considering the talent we were competing against). We finally ate breakfast at 12pm and started refining our slides in case we made finals.
+
+After much painful waiting, the top 8 finalist teams were announced. WE MADE IT. Out of ~75 teams, we were presenting to the entire room of 200 people and a panel of 50+ judges.
+
+We refined the presentation and planned the demo. After 4 teams, it was us. The second I got up there I went into flow state, churning out the script I'd practiced 100 times in the past hour. We got some laughs from the crowd, some oohs and ahhs, and went back to our seats feeling confident.
+
+Then came time to wait. Nervous as hell, palms sweaty, cortisol through the roof.
+
+## The result
+
+We won Best Use of Real-Time Data ($2,500 in prizes). Then somehow, someway — we placed 3rd.
+
+The Eric 24 hours ago would have absolutely jumped for joy. In a room of previous founders, cracked Big Tech interns, and people with billion-token spend, we came out with a prize. I was shocked. Sprinted up to the stage to accept prizes and take photos, cheesing the rest of the day.
+
+Seriously a huge thanks to Nathan and Ekagra — wouldn't have been able to do any of this without them. And to Kolbe and Robert at Laminar, and Sean and Reagan at BrowserUse for organizing an unreal event.
+
+The energy was unbelievable and we're definitely gonna be back. More hungry than ever to learn, build, connect, and challenge.
+
+Let's change the world.

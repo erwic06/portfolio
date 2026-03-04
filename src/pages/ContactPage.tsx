@@ -8,9 +8,13 @@ export default function ContactPage() {
         Feel free to reach out.
       </p>
 
-      <a href={`mailto:${personalInfo.email}`} className="contact-link">
-        <span className="label">Email</span>
-        {personalInfo.email}
+      <a href={`mailto:${personalInfo.emails[0]}`} className="contact-link">
+        <span className="label">School</span>
+        {personalInfo.emails[0]}
+      </a>
+      <a href={`mailto:${personalInfo.emails[1]}`} className="contact-link">
+        <span className="label">Personal</span>
+        {personalInfo.emails[1]}
       </a>
       <a
         href={personalInfo.socials.github}
@@ -29,6 +33,15 @@ export default function ContactPage() {
       >
         <span className="label">LinkedIn</span>
         {personalInfo.socials.linkedin.replace("https://", "")}
+      </a>
+      <a
+        href={personalInfo.socials.twitter}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="contact-link"
+      >
+        <span className="label">Twitter</span>
+        {personalInfo.socials.twitter.replace("https://", "")}
       </a>
     </div>
   );

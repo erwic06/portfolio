@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: "Eric Wong",
   title: "Software Engineer",
-  email: "wongeric@uchicago.edu",
+  emails: ["wongeric@uchicago.edu", "sugoeric15@gmail.com"],
   bio: "My interests center on systems and AI infrastructure, including distributed services and platforms that enable machine learning to operate in production.",
   roles: [
     { title: "Research Assistant", org: "Amyoli Internet Research Lab @ UChicago" },
@@ -10,6 +10,7 @@ export const personalInfo = {
   socials: {
     github: "https://github.com/erwic06",
     linkedin: "https://linkedin.com/in/eric-wong-uchi",
+    twitter: "https://x.com/shimitrap",
   },
 };
 
@@ -24,6 +25,14 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    name: "Slipstream",
+    award: "3rd Overall + Best Use of Real-Time Data — YC x BrowserUse Web Agents Hackathon",
+    date: "2026",
+    description:
+      "Shared routing brain for web agents — crowdsources optimal navigation paths from agent traces using Laminar observability, OpenAI embeddings, and MongoDB vector search.",
+    tech: ["Python", "MongoDB", "Convex", "Laminar", "BrowserUse", "An.dev"],
+  },
+  {
     name: "Micro-vLLM",
     date: "2025",
     description:
@@ -36,7 +45,7 @@ export const projects: Project[] = [
     date: "2024",
     description:
       "AI-powered gym coach with rep detection and voice coaching using MediaPipe pose estimation, deployed on GCP with Firebase backend.",
-    tech: ["Python", "MediaPipe", "FastAPI", "GCP", "Firebase"],
+    tech: ["Python", "MediaPipe", "FastAPI", "Deepgram", "Vertex AI", "GCP", "Firebase"],
   },
   {
     name: "Financial Sentiment Analysis Platform",

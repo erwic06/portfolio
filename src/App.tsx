@@ -12,7 +12,7 @@ import InterestsPage from "@/pages/InterestsPage";
 import InterestPage from "@/pages/InterestPage";
 import ContactPage from "@/pages/ContactPage";
 
-const LAST_UPDATED = "February 25, 2026";
+const LAST_UPDATED = "March 3, 2026";
 
 function App() {
   const [theme, setTheme] = useState<"dark" | "rain" | "snow" | "light">(() => {
@@ -85,6 +85,13 @@ function App() {
               rel="noopener noreferrer"
             >
               linkedIn
+            </a>
+            <a
+              href={personalInfo.socials.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              twitter
             </a>
           </div>
         </header>
